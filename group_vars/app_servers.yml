@@ -7,6 +7,8 @@ flask_app_lauch_script: /usr/local/bin/launch_resource_hub
 virtualenv_name: "venv-{{ flask_app_name }}"  
 virtualenv_home: /opt/virtual_envs
 virtualenv_python: /usr/bin/python3
+#virtualenv_interpreter: /opt/virtual_envs/resource_hub/bin/python
+
 
 app_yum_packages:
   - autoconf

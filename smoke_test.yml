@@ -11,7 +11,8 @@
     - name: Smoketest Postgres database
       vars:
         #ansible_python_interpreter: /does/not/exist
-        ansible_python_interpreter: /opt/virtual_envs/resource_hub/bin/python
+        ansible_python_interpreter: "{{ virtualenv_python }}"
+        #ansible_python_interpreter: /opt/virtual_envs/resource_hub/bin/python
       postgresql_ping:
         db: flask_db
         login_host: "{{ groups.database_servers[0] }}"
