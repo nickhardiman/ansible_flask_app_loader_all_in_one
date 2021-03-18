@@ -1,16 +1,16 @@
-
 [load_balancers]
-frontend1.52ea.internal
+192.0.2.169
 
 [app_servers]
-app1.52ea.internal
-app2.52ea.internal
+#192.0.2.159
+192.0.2.186
 
 [database_servers]
-appdb1.52ea.internal
+192.0.2.200
 
-[all:vars]
-timeout=60
-ansible_user=ec2-user
-ansible_ssh_private_key_file="~/.ssh/52eakey.pem"
-ansible_ssh_common_args="-o StrictHostKeyChecking=no"
+[dev]
+192.0.2.169
+192.0.2.200
+192.0.2.159
+192.0.2.186
+

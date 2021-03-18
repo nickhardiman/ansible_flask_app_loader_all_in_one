@@ -8,7 +8,12 @@
     - flask
   tasks:
 
-    - name: Create flask user
+    - name: add repo
+      copy:
+        src: files/open_three-tier-app.repo
+        dest: /etc/yum.repos.d/open_three-tier-app.repo
+
+    - name: app_servers  - Create flask user
       user:
         name: "{{ flask_user }}"
         state: present  
@@ -54,6 +59,26 @@
         - venv
         - virtualenv  
           
+
+    - name: check hostvars
+      vars: 
+        _db: "{{ groups['database_servers'][0] }}"
+      debug: 
+        var: hostvars[_db]['groups']
+      run_once: true
+
+    - name: fix app.py 
+      vars: 
+        _db: "{{ groups['database_servers'][0] }}"
+        _db_hostname: "{{ hostvars[_db]['inventory_hostname'] }}"
+      template: 
+        src: templates/app.py.j2
+        dest: /opt/resource_hub/app.py
+
+    - name:  This runs next.
+      debug:
+        msg: "{{ virtualenv_home }}/{{ flask_app_name }}/bin/python3 {{ flask_home }}/{{ flask_app_name }}/config.py"
+
     - name: Initialize flask app database resources
       command: "{{ virtualenv_home }}/{{ flask_app_name }}/bin/python3 {{ flask_home }}/{{ flask_app_name }}/config.py"
       run_once: true
